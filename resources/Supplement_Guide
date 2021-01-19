@@ -24,7 +24,7 @@ JNDI Name : jdbc/productDB
 Database Type : Derby
 Driver : Derby's Driver(Type 4 XA) Versions : createNamedQuery
 
-Database Name : products
+Database Name : product
 Hostname : localhost
 Port : 1527
 Database UserName : oracle
