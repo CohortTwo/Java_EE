@@ -1,0 +1,46 @@
+Labs
+====
+Fix Password of base_domain -> weblogic UserName
+================================================
+welcome_1 -> welcome1
+
+NetBeans -> Services -> weblogic -> properties -> fix password
+
+DB_Setup
+========
+0) Disable Derby Database from MW_HOME\base_domain\bin\setDomainEnv.sh/.cmd
+    DERBY
+1) Setup Derby Connection
+2) Create Database "product" /  oracle  / welcome1
+3) Run createDBObject.sql for the same.
+
+https://github.com/CohortTwo/Java_EE/tree/main/resources/createDBObjects.sql
+
+DataSource Setup
+================
+
+Name : productDB
+JNDI Name : jdbc/productDB
+Database Type : Derby
+Driver : Derby's Driver(Type 4 XA) Versions : createNamedQuery
+
+Database Name : products
+Hostname : localhost
+Port : 1527
+Database UserName : oracle
+Password : welcome1
+Targets : AdminServer
+
+Lab 3
+======
+-> Step 2.e  " Missing Jar File "
+https://github.com/CohortTwo/Java_EE/tree/main/resources/classmate-1.0.0.jar
+
+
+Lab 4 -> ProductApp-client
+===========================
+Project Properties
+
+remove error weblogic.jar and add a new Jar
+
+MW_HOME\wlserver\server\lib\weblogic.jar
