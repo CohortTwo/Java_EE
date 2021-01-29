@@ -1,0 +1,41 @@
+Summary on AuthN
+By Tan Hwee Song Andrew 652Z
+
+1. The web.xml file in WEB-INF stated that the welcome file will be login.jsp.
+
+2. The web logic.xml in WEB-INF stated that authn will be the context-root. 
+
+3. AuthBean - It is used as a stateless bean to access the oracle db, table AUTH_TBL for the following methods.
+-checkifLoggedIn(String userid) , if INUSE == 1 already logged in or INUSE == 0 not logged in.
+-setLoggedInStatus(String userid), set INUSE to 1; 
+-setLoggedOutStatus(String userid), set INUSE  to 0;
+-loginNow(String userid, String pwd) , check both userid and pwd are correct else return “invalid”
+
+4. AuthServlet is the Controller - It is a servlet using HttpServletRequest & HttpServlet Response 
+to interact with the login.jsp, detecting the login & logout process. AuthBean will allow login to
+ home.jsp with the correct credentials (userid & pwd).
+
+5. Login.jsp and home.jsp, both used the same header and footer.jsp to reduce the coding through 
+reuse, part of OOP programming. JSP are used as the Model in this program.
+
+6. The program starts from login.jsp, for user to key in the userid and pwd. Upon hitting login
+ with the correct credentials, the AuthServlet will process the business logic and flow through
+ to home.jsp.
+
+7. In the home.jsp, if the user is the admin,  all the records from table (AUTH_TBL) will be displayed
+ for the administrator, such as userid, pwd, username, inuse and operations fields. The admin can also
+ delete record or unlock the inuse status of the users logged in currently. The delete and unlock function
+ will be handed by the UserRegJSP.jsp.
+
+8. The admin can create new users for the database with the add button and the UserRegJSP.jsp will handle
+ that. The UserRegJSP.jsp will access the oracle db to update the records accordingly. After that, control
+ will return to home.jsp.
+
+9. If the user is not the admin holder, an image file will be displayed instead.
+
+10. When the user clicks the button logout, the AuthServlet will detect the logout and run 
+the login.jsp again.
+
+
+
+ 
