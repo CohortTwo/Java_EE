@@ -1,0 +1,36 @@
+AuthN app
+-is Authentication, between admin and user login page.
+-Once user login session is create, user cant login again to another new page .
+ -if username or password is wrong or blank will show Invalid Credential.
+
+a)Admin page have user management function.
+-view all user login status ontime
+-create and delete user
+-kill login session(force to logout)
+
+b)Normal user login is user normal page. logout
+---------------------------------------------------------------------------------------------------------------------------------------
+
+JSP
+1)home-Is login to Admin page and user page,Do login request and get response . Display Admin page table,and non admin image.
+	-In admin page when Add,Delete,Unlock will call UserRegJSP.jsp
+2)UserRegJSP->For admin login that calling add,delete,unlock function save detail into datasource .
+3)login-Ask enter user name and password ,when login form action=AuthServlet will POST,
+	but only have body without html header and footer is separete.(jsp include page header and footer)
+	when page is refresh only change the body part and the header and footer content are remain .
+4)header-<!DOCTYPE html> start header content <html><head><body> and close head.
+5)footer-end footer content,close </body></html>.
+------------------------------------------------------------------------------------------------------------------------------------------
+
+AuthBean
+-create session bean with stateless type. use@Resource inject from weblogic that we create data source, and create connection.
+-have 4 method
+1)checkIfLoggedIn=check login status(InUSE 1 or 0)
+2)setLoggedInStatus=login status set 1 login 1 user only  
+3)setLoggedOutStatus=login status set logout to 0.
+4)loginNow=check the login detail from database is match
+------------------------------------------------------------------------------------------------------------------------------------------
+AuthServlet
+-Extends HttpServlet and Inject Authbean ,be a controller
+-do request and get valid or invalid response on Login
+-if password or user not match will get exception invalid
