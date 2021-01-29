@@ -1,0 +1,40 @@
+Under web, theres css and images folder, for design purposes.
+
+There are 5 jsp files, with the landing page as login.jsp. 
+In login.jsp, the form action uses AuthServlet, and the submit button
+has a value of "Login".
+
+home.jsp file has what the user will see when signed in as "admin" vs what the users
+see if they are non-admin users.
+For the admin, it will query the userid, password, username and inuse from the 
+HR.AUTH_TBL database.
+If the user is locked, the "unlock" button will appear under Operations. Else, only the
+delete button appears.
+If admin keys in input in the new row and click on the "Add" button, the form action
+will be UserRegJSP.jsp.
+For non-admin users, it will just display the image as the home page.
+
+UserRegJSP.jsp does the update query into HR.AUTH_TBL database, based on what the admin
+inputs in the last row of the table.
+
+footer.jsp, header.jsp are the fixed sections of the page.
+
+AuthBean is a stateless session bean and uses the resource jdbc/oraDS. It implements
+all the business logics.
+There are a few functions written in this file.
+checkIfLoggedIn() checks if the userid is already logged in, based on whether INUSE==1
+in the record where the userid matches.
+setLoggedInStatus() updates the INUSE to 1 when the user logs in, while
+setLoggedOutStatus() updates the INUSE to 0 when the user logs out.
+loginNow() takes two parameters, the userid and password, and it uses a query to 
+select the username based on the userid and password. If username is found, then return it.
+Else if the username is not found, print "invalid" for the credentials.
+
+AuthServlet injects AuthBean and extends HttpServlet. It acts as a controller
+ If "Login" is selected in the
+login page, it will get the userid and password, and then it will check if the user
+is already logged in to the session using checkIfLoggedIn(). Else, check if the username
+is valid,and if valid, go to the home page. If "Logout" action is selected, invalidate the
+session.
+
+
