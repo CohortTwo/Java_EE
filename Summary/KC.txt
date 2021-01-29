@@ -1,0 +1,47 @@
+AuthBean 
+
+- Session Bean which implements all the business logic (It is the Model function in MVC). In this case, it has 4 methods;
+
+1. Login, 
+2. Set Login Status, 
+3. Set Logout Status and 
+4. Check Login Status
+
+@Resource is referenced/pointed to the DataSource(DS) JNDI in WebLogic Server. (Note: DS is created from WebLogic Server)
+
+and create DataSource variable under the annotation.
+
+Within each business logic/methods, a Connection is initalized to connect to the DS and a Statement is written to execute the SQL query inside the DS/JDBC. 
+
+--------------------------------------------------------------
+AuthServlet
+
+- Servlet which serves as a Controller in the MVC design. 
+AuthBean is injected into the Servlet.
+
+Creates a connection to the HTTP protocol with request and response as part of the processRequest's argument.
+
+A logic is implemented with 2 actions, login and logout.
+
+For login -> check if the user has logged into the session. 
+
+If the user account is not logged in, the Login method from the session bean (AuthBean) will be called to allow user to log in and the Set Login Status method will be called to change from value 0 to 1 (indicating that the user account has been logged in)
+
+Else, if the user account has already been logged in, there will be an error in the request. 
+
+For logout -> if user clicks log out, the Set Logout Status method will be called to revert the value from 1 to 0 and the session.invalidate() method has been called to remove the state from the session bean.
+
+-------------------------------------------------------------
+Java Server Page
+
+- They are carry out the View function for users to interaction with the interface.
+
+The flow of the UI goes from login page 
+
+which consist of 2 other JSP (header and footer - no need for <header> and <footer> like typical HTML format) 
+
+to home page.
+
+Within the login page, it has referenced the AuthServlet along with other forms, input and buttons for user inputs.
+
+Within the home page, it will display the content for the users. In this program, there is an additional feature specifically for the admin user which calls the UserRegJSP (to create new users and their passwords as well as resetting the login status to 0 (unlock feature).
