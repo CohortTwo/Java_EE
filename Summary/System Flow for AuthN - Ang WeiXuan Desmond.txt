@@ -1,0 +1,102 @@
+Begins at the home page.
+
+**AuthBean contains the methods to be used to validate entries at each event or 
+as requested by the Servlet.**
+
+LOGIN
+=========
+Upon entering the value and selecting the login
+1) triggers the servlet
+2) Servlet will receive the request and create a new Session
+
+**Note that in order to use the methods found within the AuthBean, an @Inject is used**
+[In this case, this injected objected is given the name abean. 
+Quite similar to how we will need to create an object of the class to use the methods within]
+3) Key in user and password and click Login Button
+
+4) the Servlet will then determine the value of the request
+  -> if value is login, userid and pwd variables will be assigned from the input element with the name="usrn" & "pwd"
+   
+5) After which, object abean calls its method checkIfLoggedIn using the userid as an argument
+ a) checkIfLoggedIn creates a new connection to our database.
+ b) the userid is then used inside the SQL query statement
+ c) rs.next() is used to check if there is any result from the query
+	i.   if the INUSE column value is 1
+	ii.  system will print to console User already logged in
+	iii. value will be set to true
+	iv.  attribute is then set to "status"
+	v.   the response will then be to return to the login page
+	vi.  upon reaching login page, if getAttribute("status") is true, it tells user already login
+	[In this case, will surely be true as it has been set as such]
+
+6) If the check returns false, it will then proceed to loginNow method
+ a) loginNow checks if the username and password is valid
+ b) If valid, it returns the Username to be used for the header
+	=> User will then get to the home page
+    Else it will return invalid back to the Servlet
+	=> if "invalid" is received, then the user goes back to the login page
+
+**Depending on the Session setAttribute, the displayed home page will differ**
+
+ON LOADING THE HOME PAGE
+==========================================
+usrName is assigned by the session attribute as set above.
+
+Value obtained via the getAttribute.
+
+1) If the evaluation of usrName is confirmed as "admin",
+  => the dataSource is referenced using it's JNDI name [jdbc/OraDS]
+  => the dataSource is then queried with the select statement
+
+2) The values will be populated inside the table element
+  => buttons of delete will be inserted into the last column.
+   => if INUSE value is 1, UNLOCK button will be created for that row, otherwise only DELETE
+
+On add, update and delete, the value of the button clicked will be obtained from the "action"
+and stored in var "op"
+
+ADD FUNCTION
+================
+op value is 'Add' from the button value...
+
+If adding user, upon add, redirect to the UserRegJSP page with value "Add" assigned to var op
+=> The SQL Statement will be to Insert with the parameters set in the input box
+	=> userid will be stored to be used as evaluation once again when entering the home page.
+
+After which, it will redirect to the home page again and then evaluated as mentioned above
+
+DELETE FUNCTION
+================
+op value is 'Delete' from the button value...
+
+If deleting,  user will be redirected to the UserRegJSP page with value "Delete" assigned to var op
+=> The SQL Statement will be to Delete where the value is from the table col element with name userid
+
+UNLOCK FUNCTION
+================
+op value is 'Unlock' from the button value...
+
+For unlocking user, redirection to the UserRegJSP page but with value "Unlock" assigned to var op
+=> The SQL Statement will then be Update Inuse value to 0 for the user with parameters value from the 
+   table col element with name userid
+
+WHAT IF NOT ADMIN
+=======================
+User will be shown a different page with just an image rather than the table of users.
+
+LOGOUT?
+===========
+Upon clicking the logout button, it calls the Servlet similar to Login.
+
+Difference in that this time the action value is Logout rather than Login.
+
+On Logout, the servlet will call the setLoggedOutStatus method and open the connection with the DB
+in order to set Inuse value to 0.
+
+After this, the session is invalidated and user gets returned to login screen.
+
+
+Header and Footers
+======================
+They are set as separate JSP pages to be called in modular fashion into the pages as required.
+
