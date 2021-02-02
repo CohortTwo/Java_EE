@@ -1,0 +1,33 @@
+CDI relieves the user of an unfamiliar API of the need to answer the following questions:
+
+  1) What is the lifecycle of this object ?
+  2) How many simultaneous clients can it have ?
+  3) Is it multithreaded ?
+  4) How do I Get Access to it from a client ?
+  5) Do I need to explicitly destroy it ?
+  6) Where should I keep the reference to it when I'm not currently using it ?
+  7) How can I define an alternative implementation, so that the implementation can vary at deployment time ?
+  8) How should I go about sharing this object between other objects
+
+  "Loose-Coupling with Strong Typing"
+
+  * Event Notifications
+  * Interceptors
+  * Decorators
+
+  Bean = Every concrete Java Class that has a ZAC is a Bean or a FLC with @Inject.
+  Container = creates and destroys instances of your beans and associate them with a desinated context, injecting them into other beans, using them in EL expressions, specializing them with qualifiers annotations, even adding Interceptors and Decorators to them - without modifying your existing code. (only add @)
+
+MDB, Interceptors, Servlets, Servlet Filters, Servlet Event Listeners
+JAX-WS Service Endpoints and Handlers
+JAX-RS Resources
+JSP Tag Handlers and Tag Library Event Listeners
+
+@Typed (Shop.class)
+@Inject
+@Qualifier [another type]
+@Target ({TYPE,METHOD, PARAMETER, FIELD})
+@Scope [RequestScoped, SessionScoped, ApplicationScoped, ConversationScoped]
+@Name [EL name]
+@Alternative
+@Produces 
